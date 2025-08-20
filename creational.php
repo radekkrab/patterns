@@ -16,7 +16,7 @@ echo factoryMethod(new RoadLogistics()) . "\n";
 echo "\nДоставка морем:\n";
 echo factoryMethod(new SeaLogistics()) . "\n";
 
-// Абстрактная фабрика, создаём группу объектов через фабрику
+// Абстрактная фабрика, создаём через абстрактную фабрику нужные фабрики для создания групп связанных объектов,
 
 $windowsFactory = GUIFactory::createFactory('windows');
 $windowsClient = new Client($windowsFactory);
