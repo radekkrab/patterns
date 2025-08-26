@@ -9,6 +9,7 @@ use App\Creational\FactoryMethod\Creators\SeaLogistics;
 use App\Creational\Builder\Builder\Director;
 use App\Creational\Builder\Builder\CarBuilder;
 use App\Creational\Builder\Builder\CarManualBuilder;
+use App\Creational\Singleton\Logger;
 use function App\Creational\FactoryMethod\factoryMethod;
 
 // Фабричный метод, создаём объекты через абстрактный класс используя подклассы
@@ -63,3 +64,28 @@ $cityCar = $carBuilder->getResult();
 
 echo "=== CITY CAR ===\n";
 echo $cityCar . "\n\n";
+
+// Синглтон, один объект
+
+// Получаем экземпляр Singleton
+$logger1 = Logger::getInstance();
+$logger2 = Logger::getInstance();
+
+// Проверяем, что это один и тот же объект
+if ($logger1 === $logger2) {
+    echo "✓ Это один и тот же экземпляр Logger\n";
+} else {
+    echo "✗ Это разные экземпляры\n";
+}
+
+// Используем логгер
+$logger1->log("Первое сообщение");
+$logger2->log("Второе сообщение");
+
+// Получаем логи (можно через любой экземпляр)
+$logs = $logger1->getLogs();
+
+echo "Логи:\n";
+foreach ($logs as $log) {
+    echo "[{$log['timestamp']}] {$log['message']}\n";
+}
