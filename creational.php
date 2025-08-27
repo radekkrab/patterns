@@ -10,6 +10,8 @@ use App\Creational\Builder\Builder\Director;
 use App\Creational\Builder\Builder\CarBuilder;
 use App\Creational\Builder\Builder\CarManualBuilder;
 use App\Creational\Singleton\Logger;
+use App\Creational\Prototype\AnotherPrototype;
+use App\Creational\Prototype\ConcretePrototype;
 use function App\Creational\FactoryMethod\factoryMethod;
 
 // Фабричный метод, создаём объекты через абстрактный класс используя подклассы
@@ -89,3 +91,55 @@ echo "Логи:\n";
 foreach ($logs as $log) {
     echo "[{$log['timestamp']}] {$log['message']}\n";
 }
+
+// Прототип, создание объекта через clone
+
+echo "=== Демонстрация паттерна Прототип ===\n\n";
+
+// Создаем оригинальный объект
+$original = new ConcretePrototype(
+    "Первая статья",
+    "Это содержание оригинальной статьи"
+);
+
+echo "Оригинальный объект:\n";
+echo $original . "\n";
+echo "Время создания: " . $original->getCreatedAt()->format('H:i:s.u') . "\n\n";
+
+// Клонируем объект
+$clone = $original->clone();
+
+echo "Клонированный объект:\n";
+echo $clone . "\n";
+echo "Время создания: " . $clone->getCreatedAt()->format('H:i:s.u') . "\n\n";
+
+// Модифицируем клон
+$clone->setTitle("Клонированная статья");
+$clone->setContent("Это модифицированное содержание");
+
+echo "Модифицированный клон:\n";
+echo $clone . "\n\n";
+
+echo "Оригинал после модификации клона:\n";
+echo $original . "\n\n";
+
+// Демонстрация с другим прототипом
+echo "=== Другой тип прототипа ===\n\n";
+
+$articleWithTags = new AnotherPrototype(
+    "Статья с тегами",
+    "Содержание статьи с тегами",
+    ['php', 'design-patterns', 'prototype']
+);
+
+echo "Оригинал с тегами:\n";
+echo $articleWithTags . "\n\n";
+
+$articleClone = $articleWithTags->clone();
+$articleClone->addTag('clone');
+
+echo "Клон с добавленным тегом:\n";
+echo $articleClone . "\n\n";
+
+echo "Оригинал после модификации клона:\n";
+echo $articleWithTags . "\n\n";
